@@ -12,7 +12,7 @@ maintainer:          konn.jinro_at_gmail.com
 copyright:           2014 (c) Hiromi ISHII
 category:            Control, Effect
 build-type:          Simple
-extra-source-files:  examples/*.hs
+-- extra-source-files:  examples/*.hs
 cabal-version:       >=1.10
 
 source-repository head
