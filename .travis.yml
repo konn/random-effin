@@ -1,0 +1,26 @@
+language: haskell
+ghc: 7.8
+before_install:
+- cabal install --only-dependencies -j2 -fMonadRandom
+script:
+- cabal configure --enable-tests --enable-benchmarks -v2
+- cabal build -j
+- cabal test
+- cabal clean
+- cabal configure --enable-tests --enable-benchmarks -v2  -fMonadRandom
+- cabal build -j
+- cabal test
+- cabal check
+- cabal sdist
+- export SRC_TGZ=$(cabal info . | awk '{print $2 ".tar.gz";exit}') ; cd dist/; if
+  [ -f "$SRC_TGZ" ]; then cabal install -j2 "$SRC_TGZ"; cabal install -fMonadRandom -j2 "$SRC_TGZ"; else echo "expected '$SRC_TGZ'
+  not found"; exit 1; fi
+
+deploy:
+  provider: hackage
+  username: "HiromiIshii"
+  password:
+    secure: gxhoVVO/PdAQoW1RCNtXGWf3SzIrsT2NEe9stfw+bDW1AuFFpTyhyRT1CC6ha6LkXcRZE812WWTMkKeT+Ne9f21Q0f2k+nNUWDAMtp4jFXdVITlVSLYza9QkA3KqUPssIa8vGE415lgdKDLn60g8+u6cc87V6BRDe7sO7lbdQTM=
+  on:
+    all_branches: true
+    tags:         true
