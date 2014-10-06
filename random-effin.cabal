@@ -25,7 +25,7 @@ flag MonadRandom
 
 library
   if flag(MonadRandom)
-    build-depends:     MonadRandom >= 0.3 && < 0.2
+    build-depends:     MonadRandom >= 0.3 && < 0.4
     ghc-options:       "-DMONADRANDOM"
   exposed-modules:     Control.Effect.Random
   other-extensions:    DeriveDataTypeable,
