@@ -1,7 +1,10 @@
 language: haskell
+
 ghc: 7.8
+
 before_install:
 - cabal install --only-dependencies -j2 -fMonadRandom
+
 script:
 - cabal configure --enable-tests --enable-benchmarks -v2
 - cabal build -j
@@ -13,14 +16,22 @@ script:
 - cabal check
 - cabal sdist
 - export SRC_TGZ=$(cabal info . | awk '{print $2 ".tar.gz";exit}') ; cd dist/; if
-  [ -f "$SRC_TGZ" ]; then cabal install -j2 "$SRC_TGZ"; cabal install -fMonadRandom -j2 "$SRC_TGZ"; else echo "expected '$SRC_TGZ'
-  not found"; exit 1; fi; cd ../
+  [ -f "$SRC_TGZ" ]; then cabal install -j2 "$SRC_TGZ"; cabal install -fMonadRandom
+  -j2 "$SRC_TGZ"; else echo "expected '$SRC_TGZ' not found"; exit 1; fi; cd ../
 
 deploy:
   provider: hackage
-  username: "HiromiIshii"
+  username: HiromiIshii
   password:
-    secure: gxhoVVO/PdAQoW1RCNtXGWf3SzIrsT2NEe9stfw+bDW1AuFFpTyhyRT1CC6ha6LkXcRZE812WWTMkKeT+Ne9f21Q0f2k+nNUWDAMtp4jFXdVITlVSLYza9QkA3KqUPssIa8vGE415lgdKDLn60g8+u6cc87V6BRDe7sO7lbdQTM=
+    secure: VqoYvoJYhBOT0ifWsU+4m2e1UtI0/KgZKcAI9GMxGU3R8fGGQq7KqediMY64dJGpFt+bt0BUX6K0rFKMmKAauJVMgcxxxPcDGpmCo4RaATBaa43452vbRE3qIRJZMTGUh0yBaEF8QQANTd/C3bWNJw2DSvjo0d2gQ8XD7pgn5Rg=
   on:
     all_branches: true
-    tags:         true
+    tags: true
+
+after_deploy:
+  - sh ./upload-haddock.sh
+
+env:
+  global:
+    - HACKAGE_USER: "HiromiIshii"
+    - secure: ILexjCUC2kFvDpFMhPYNBa6Q29gZeiT8M49+9l1s+5e17hdBrXg5P9/2dDIar3IowQeS+STTW9Re7Ex3/mCJlCvz7nRGjKTDEkppFu7wUuO1HOInaP3OJKeT7NmQv9J85i2NF+b5DMvHeTSUi1dOIxW2DCIkOlMCCepTgDAdKuw=
