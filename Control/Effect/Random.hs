@@ -6,7 +6,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 module Control.Effect.Random
        (module System.Random,
-        Rand,
+        Rand, EffectRandom,
         -- * Execution
         runRand, evalRand, evalRandIO,
         -- * Generator functions
